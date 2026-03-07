@@ -5,7 +5,7 @@ pipeline {
 
         stage('Clone Code') {
             steps {
-                git 'https://github.com/krishnachaitanya90/spring-petclinic-devops.git'
+                git branch: 'main', url: 'https://github.com/krishnachaitanya90/spring-petclinic-devops.git'
             }
         }
 
@@ -18,7 +18,9 @@ pipeline {
 
         stage('SonarQube Scan') {
             steps {
-                sh './mvnw sonar:sonar'
+                withSonarQubeEnv('sonarqube') {
+                    sh './mvnw sonar:sonar'
+                }
             }
         }
 
@@ -30,7 +32,8 @@ pipeline {
 
         stage('Run Container') {
             steps {
-                sh 'docker run -d -p 8085:8080 devops-app'
+                sh 'docker rm -f petclinic || true'
+                sh 'docker run -d -p 8085:8080 --name petclinic devops-app'
             }
         }
 
