@@ -30,6 +30,16 @@ pipeline {
             }
         }
 
+        stage('Push Docker Image') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                    sh 'echo $PASS | docker login -u $USER --password-stdin'
+                    sh 'docker tag devops-app chaitanya1234567/devops-app:latest'
+                    sh 'docker push chaitanya1234567/devops-app:latest'
+                }
+            }
+        }
+
         stage('Run Container') {
             steps {
                 sh 'docker rm -f petclinic || true'
