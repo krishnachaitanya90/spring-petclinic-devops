@@ -42,7 +42,7 @@ pipeline {
         stage('Run Container') {
             steps {
                 sh 'docker rm -f petclinic || true'
-                sh 'docker run -d -p 8085:8080 --name petclinic chaitanya1234567/devops-app:latest'
+                sh 'docker run -d -p 8086:8080 --name petclinic chaitanya1234567/devops-app:latest'
             }
         }
 
