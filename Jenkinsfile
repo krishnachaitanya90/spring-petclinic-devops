@@ -34,7 +34,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
                     sh 'echo $PASS | docker login -u $USER --password-stdin'
-                    sh 'docker push chaitanya1234567/devops-app:latest'
+                    sh 'docker push chaitanya1234567/devops-app2:latest'
                 }
             }
         }
